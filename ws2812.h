@@ -18,6 +18,7 @@ extern "C" {
 #endif
 
 #include "esp_err.h"
+#include "driver/rmt.h"
 
 /**
 * @brief LED Strip Type
@@ -100,16 +101,18 @@ struct led_strip_s {
 typedef struct {
     uint32_t max_leds;   /*!< Maximum LEDs in a single strip */
     led_strip_dev_t dev; /*!< LED strip device (e.g. RMT channel, PWM channel, etc) */
+    rmt_channel_t rmt_channel;
 } led_strip_config_t;
 
 /**
  * @brief Default configuration for LED strip
  *
  */
-#define LED_STRIP_DEFAULT_CONFIG(number, dev_hdl) \
+#define LED_STRIP_DEFAULT_CONFIG(number, dev_hdl, rmt_chan) \
     {                                             \
         .max_leds = number,                       \
         .dev = dev_hdl,                           \
+        .rmt_channel = rmt_chan,                           \
     }
 
 /**
